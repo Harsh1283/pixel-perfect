@@ -217,12 +217,12 @@ export function useUpdate<T extends TableName>(table: T) {
   const invalidate = useInvalidate();
   return useMutation({
     mutationFn: async ({ id, values }: { id: string; values: TablesUpdate<T> }) => {
-      const { data, error } = await supabase
-        .from(table)
-        .update(values as never)
-        .eq("id", id)
-        .select()
-        .single();
+      const query = supabase.from(table) as unknown as {
+        update: (v: unknown) => {
+          eq: (c: string, v: string) => { select: () => { single: () => Promise<{ data: unknown; error: { message: string } | null }> } };
+        };
+      };
+      const { data, error } = await query.update(values).eq("id", id).select().single();
       if (error) throw new Error(error.message);
       return data;
     },
@@ -234,7 +234,10 @@ export function useRemove<T extends TableName>(table: T) {
   const invalidate = useInvalidate();
   return useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from(table).delete().eq("id", id);
+      const query = supabase.from(table) as unknown as {
+        delete: () => { eq: (c: string, v: string) => Promise<{ error: { message: string } | null }> };
+      };
+      const { error } = await query.delete().eq("id", id);
       if (error) throw new Error(error.message);
       return id;
     },
