@@ -9,7 +9,7 @@ export function Panel({
   tone = "surface",
 }: {
   children: ReactNode;
-  className?: string;
+  className?: string | undefined;
   tone?: "surface" | "coral" | "sun" | "teal" | "grape" | "muted";
 }) {
   const tones: Record<string, string> = {
@@ -29,8 +29,8 @@ export function PageHeader({
   action,
 }: {
   title: string;
-  subtitle?: string;
-  action?: ReactNode;
+  subtitle?: string | undefined;
+  action?: ReactNode | undefined;
 }) {
   return (
     <div className="flex flex-wrap items-end justify-between gap-4">
@@ -55,7 +55,7 @@ export function StatCard({
 }: {
   label: string;
   value: string;
-  hint?: string;
+  hint?: string | undefined;
   tone?: "coral" | "sun" | "teal" | "grape";
 }) {
   const tones = {
@@ -90,7 +90,7 @@ export function Chip({
 }: {
   children: ReactNode;
   tone?: keyof typeof chipTones | string;
-  className?: string;
+  className?: string | undefined;
 }) {
   return (
     <span
@@ -144,7 +144,7 @@ export function LoadingState({ rows = 4 }: { rows?: number }) {
   );
 }
 
-export function ErrorState({ message, onRetry }: { message?: string; onRetry?: () => void }) {
+export function ErrorState({ message, onRetry }: { message?: string | undefined; onRetry?: () => void }) {
   return (
     <div className="rounded-3xl bg-coral/10 p-6 text-center">
       <div className="font-display text-lg font-extrabold text-coral">Something went wrong</div>
@@ -171,8 +171,8 @@ export function EmptyState({
 }: {
   title: string;
   description: string;
-  action?: ReactNode;
-  icon?: ReactNode;
+  action?: ReactNode | undefined;
+  icon?: ReactNode | undefined;
 }) {
   return (
     <div className="flex flex-col items-center rounded-3xl bg-muted/60 px-6 py-14 text-center">
@@ -216,7 +216,7 @@ export function Bubble({
 }: {
   text: string;
   tone?: "coral" | "sun" | "teal" | "grape";
-  className?: string;
+  className?: string | undefined;
 }) {
   const tones = {
     coral: "bg-coral text-on-coral",
