@@ -96,7 +96,7 @@ export function Chip({
     <span
       className={cn(
         "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold",
-        chipTones[tone] ?? chipTones.neutral,
+        chipTones[tone] ?? chipTones['neutral'],
         className,
       )}
     >
@@ -200,7 +200,7 @@ export function ProgressBar({ value, tone = "coral" }: { value: number; tone?: s
   return (
     <div className="h-2 w-full overflow-hidden rounded-full bg-ink/10 dark:bg-cream/15">
       <div
-        className={cn("h-full rounded-full transition-all", tones[tone] ?? tones.coral)}
+        className={cn("h-full rounded-full transition-all", tones[tone] ?? tones['coral'])}
         style={{ width: `${Math.min(100, Math.max(0, value))}%` }}
       />
     </div>
@@ -241,5 +241,5 @@ export function toneFromString(seed: string): "coral" | "sun" | "teal" | "grape"
   const tones = ["coral", "sun", "teal", "grape"] as const;
   let sum = 0;
   for (let i = 0; i < seed.length; i++) sum += seed.charCodeAt(i);
-  return tones[sum % tones.length];
+  return tones[sum % tones.length] ?? "coral";
 }
